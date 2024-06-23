@@ -47,3 +47,11 @@ $ docker-compose run --rm web-app sh -c "python manage.py fill_contracts"
 
 Запуск детектора происходит периодической задачей через celery, которая описана в файле erc20.tasks.check_and_update_erc20_contracts. 
 Лучший результат которого удалось достигнуть в рамках одного контейнера 2000000 контрактов в неделю.
+
+***
+Основные файлы, где происходит весь сахар:
+- erc20/models - описание моделей в бд
+- erc20/comparer - проверка стандарта erc20
+- erc20/tasks - описание периодической задачи на проверку erc20
+- core/tocken_standarts/base_comparer - базовый класс для сравнения 
+- core/tocken_standarts/signatures - описание сигнатур функций контракта
