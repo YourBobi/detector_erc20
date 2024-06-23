@@ -2,14 +2,24 @@
 name = "detector-erc20"
 version = "0.1.0"
 description = ""
-authors = ["Selivonchyk <selivonchyk_nikolay@mail.r>"]
+authors = ["Selivonchyk <selivonchyk_nikolay@mail.ru>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
 django = "^5.0.6"
-psycopg2-binary = "^2.9.9"
 commitizen = "^3.27.0"
+environs = "^11.0.0"
+psycopg = "^3.1.18"
+
+solc-select = "^1.0.4"
+slither-analyzer = "0.6.7"
+crytic-compile = "0.1.4"
+celery = "^5.4.0"
+redis = "^5.0.6"
+flake8 = "^7.1.0"
+isort = "^5.13.2"
+
 
 
 [build-system]

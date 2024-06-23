@@ -9,8 +9,12 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-import os
 from pathlib import Path
+import environs
+
+env = environs.Env()
+env.read_env()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,6 +41,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
+    "erc20",
+    "core"
 ]
 
 MIDDLEWARE = [
@@ -76,11 +83,11 @@ WSGI_APPLICATION = "detector.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get("DB_NAME"),
-        "HOST": os.environ.get("DB_HOST"),
-        # "PORT": os.environ.get("DB_HOST"),
-        "USER": os.environ.get("DB_USER"),
-        "PASSWORD": os.environ.get("DB_PASSWORD"),
+        "NAME": env.str("DB_NAME", 'detector'),
+        "HOST": env.str("DB_HOST", '5432'),
+        # "PORT": env.str("DB_HOST"),
+        "USER": env.str("DB_USER", 'postgres'),
+        "PASSWORD": env.str("DB_PASSWORD", 'postgres'),
     }
 }
 
@@ -125,3 +132,18 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+#
+# celery
+#
+
+CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
+CELERY_BROKER_TRANSPORT_OPTIONS = {"visibility_timeout": 3600}
+CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
+
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+
+# чтобы локально таски в селери запускались падали в свою очередь
+CELERY_TASK_ALWAYS_EAGER = True
