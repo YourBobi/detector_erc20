@@ -5,6 +5,7 @@ from solc_select.solc_select import installed_versions, get_available_versions, 
 
 
 class ContractComparer:
+    """Compare contracts standards"""
 
     contract_type = None
     required_functions_names = set()
@@ -16,7 +17,14 @@ class ContractComparer:
         self.functions = []
         self.__set_functions()
 
-    def __get_slither(self, contract_address):
+    def __get_slither(self, contract_address: str) -> Slither:
+        """
+        Get Slither object by source code
+        :param contract_address: Address of contract
+        :type contract_address: str
+        :return: Slither object
+        :rtype: Slither
+        """
         if not os.path.isdir('buffer'):
             os.mkdir('buffer')
 
@@ -28,6 +36,11 @@ class ContractComparer:
         return result
 
     def __set_functions(self):
+        """
+        Set functions for contract standard
+        :return: None
+        :rtype: None
+        """
         for func in self.contract.functions:
             if (
                     func.is_implemented
@@ -37,7 +50,14 @@ class ContractComparer:
                 self.functions.append(func)
 
     @staticmethod
-    def __use_correct_solidity_version(version):
+    def __use_correct_solidity_version(version: str):
+        """
+        Use correct solidity version for contract
+        :param version: Solidity code version
+        :type version: str
+        :return: None
+        :rtype: None
+        """
         if current_version()[0] == version:
             ...
         elif version not in installed_versions() and version in get_available_versions():

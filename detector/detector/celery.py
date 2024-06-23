@@ -14,6 +14,6 @@ app.conf.timezone = "Europe/Minsk"
 app.conf.beat_schedule = {
     "every-1-hours": {
         "task": "erc20.tasks.check_and_update_erc20_contracts",
-        "schedule": 5,
+        "schedule": 3600,
     },
 }

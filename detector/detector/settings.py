@@ -84,8 +84,7 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": env.str("DB_NAME", 'detector'),
-        "HOST": env.str("DB_HOST", '5432'),
-        # "PORT": env.str("DB_HOST"),
+        "HOST": env.str("DB_HOST", 'localhost'),
         "USER": env.str("DB_USER", 'postgres'),
         "PASSWORD": env.str("DB_PASSWORD", 'postgres'),
     }
@@ -137,9 +136,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # celery
 #
 
-CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
+CELERY_BROKER_URL = env.str("REDIS_URL", "redis://redis:6379/0")
 CELERY_BROKER_TRANSPORT_OPTIONS = {"visibility_timeout": 3600}
-CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
+CELERY_RESULT_BACKEND = env.str("REDIS_URL", "redis://redis:6379/0")
 
 CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_TASK_SERIALIZER = "json"

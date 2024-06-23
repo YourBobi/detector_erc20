@@ -9,6 +9,7 @@ logger = get_task_logger(__name__)
 
 @app.task
 def check_and_update_erc20_contracts():
+    """Start check type of contract standards"""
     contracts_ids = list(
         ERC20.objects.filter(status=ERC20Statuses.WAIT_PROCESSING)
         .order_by('solidity_version')
@@ -32,6 +33,7 @@ def check_and_update_contract(contract_id: ERC20):
         )
         contract.is_erc20 = comparer.compare_signature()
         if contract.is_erc20:
+            # не реализовал
             contract.erc20_version = ''
         contract.status = ERC20Statuses.PROCESSED
     except Exception as e:
